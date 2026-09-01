@@ -14,6 +14,7 @@ Usage:
 
 import os
 import sys
+import traceback
 
 MODEL_PATH = os.environ.get("SMOKE_MODEL_PATH", "/model")
 STEPS = 50
@@ -48,12 +49,14 @@ def main():
               f"qwen38-train container): {exc}")
         return 1
 
-    print(f"[smoke] loading {MODEL_PATH} (4-bit QLoRA)...", flush=True)
+    print(f"[smoke] loading {MODEL_PATH} (16-bit LoRA; the FP8 checkpoint is "
+          f"pre-quantized so 4-bit load is disabled)...", flush=True)
     try:
         model, tokenizer = FastLanguageModel.from_pretrained(
             model_name=MODEL_PATH,
             max_seq_length=SEQ_LEN,
-            load_in_4bit=True,
+            load_in_4bit=False,
+            dtype=None,
         )
         model = FastLanguageModel.get_peft_model(
             model,
@@ -66,6 +69,7 @@ def main():
         )
     except Exception as exc:
         print(f"SMOKE FAIL: model/adapter load error: {exc}")
+        print(traceback.format_exc())
         return 1
 
     dataset = Dataset.from_dict({
@@ -95,6 +99,7 @@ def main():
         trainer.train()
     except Exception as exc:
         print(f"SMOKE FAIL: training error: {exc}")
+        print(traceback.format_exc())
         return 1
 
     losses = [h["loss"] for h in trainer.state.log_history if "loss" in h]
