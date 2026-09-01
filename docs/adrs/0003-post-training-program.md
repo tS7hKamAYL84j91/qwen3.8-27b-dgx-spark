@@ -1,6 +1,7 @@
 # ADR-0003: Execute the admin/Q post-training program (minimal path)
 
-- Status: Proposed
+- Status: Accepted (Gravitas ratification via chief-of-staff, 2026-09-01, with conditions)
+- Date: 2026-09-01
 - Date: 2026-09-01
 - Owner: qwen3.8-27b-dgx-spark GM
 - Related: ADR-0001 (residency), ADR-0002 (serving config),
@@ -68,3 +69,15 @@ Execute the minimal path:
 Proposed, pending Gravitas approval. If approved, execution order is:
 smoke test → admin/Q task inventory from coas → Stage 1 data build →
 single SFT run → eval → promotion decision (which triggers Stage 3).
+
+## Ratification (2026-09-01, chief-of-staff relaying Gravitas)
+
+APPROVED as the phased plan above. Conditions attached:
+
+1. The 30-minute feasibility smoke test is the hard gate: if it fails, stop
+   and report before any data spend.
+2. The EO coordinates the admin/Q task inventory (tool surface + report
+   templates) from spec 0002's open questions and routes it here.
+3. The `make stop` training window for the QLoRA run must be confirmed with
+   Q (coas-daemon residency) before any GPU spend.
+4. Broader-adoption (step-3) decisions remain gated on the pilot report.
