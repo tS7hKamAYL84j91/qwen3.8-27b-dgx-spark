@@ -11,6 +11,11 @@ RUN pip install --no-cache-dir \
 # back to the unslothai Dockerfile_DGX_Spark recipe (source-built triton
 # c5d671f + xformers TORCH_CUDA_ARCH_LIST=12.1) per the NVIDIA playbook
 # troubleshooting section.
-
+#
+# CRITICAL runbook detail (gate 1, 2026-09-01): gcc reads a legacy local
+# spec file from the CWD named `specs` — if the container's working
+# directory contains training/specs/ (a directory), every Triton JIT
+# compile dies with "cannot read spec file './specs': Is a directory".
+# Always run training containers with -w outside the repo (e.g. -w /tmp).
 WORKDIR /workspace
 CMD ["/bin/bash"]
