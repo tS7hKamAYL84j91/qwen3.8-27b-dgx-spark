@@ -35,6 +35,13 @@ and repeated downloads resumable. Existing checkpoints are left alone.
 
 ## Running it
 
+`make setup` ensures the promoted runtime is serving and is safe to re-run
+(it starts the container only when the endpoint is not already healthy):
+
+```bash
+make setup
+```
+
 The recommended production command is:
 
 ```bash
@@ -119,6 +126,23 @@ Pinned checkpoint revisions used for the comparison:
 - `unsloth/Qwen3.8-27B-NVFP4` at `16b6615af3548b88e2d8e382457bc705b00479cf`
 - `RadixArk/Qwen3.8-27B-NVFP4` at `52d1adc5f38aa5ebf099c29ed7025ba34cfbb854`
 - `RadixArk/Qwen3.8-27B-DSpark` at `85ef153be924f17ce4bf62726954eeaa4a73e854`
+
+### Ollama comparison
+
+`benchmarks/bench.py` measures both runtimes with identical raw prompts and
+greedy decoding (median of 3 runs, 2026-09-01, this machine):
+
+| Test | SGLang DSpark (NVFP4) | Ollama 0.33.2 (GGUF) |
+|---|---:|---:|
+| Short decode, 256 tokens | 22.25 tok/s | 21.61 tok/s |
+| Coding decode, 512 tokens | 30.87 tok/s | 31.09 tok/s |
+| Long prefill, 37,388 tokens | 24.6 s (1,518 tok/s) | 53.6 s (697 tok/s) |
+
+Decode is a tie because both runtimes use speculative decoding (DSpark
+versus ollama's MTP). SGLang prefills 2.2x faster and serves 8 concurrent
+requests against ollama's single slot, so it remains the promoted profile.
+The two runtimes cannot hold the GPU at the same time on this box, which is
+recorded in [ADR-0001](docs/adrs/0001-sglang-resident-runtime.md).
 
 ## Configuration
 
