@@ -1,0 +1,54 @@
+{
+  "dedupe_key": "session_filename",
+  "discovered_snapshot_files": 81958,
+  "emitted_records": 12,
+  "schema": "spec-0001",
+  "source": "coas-trace",
+  "unique_session_files": 284,
+  "workspaces": {
+    "admin-assistant": {
+      "domain": "admin",
+      "session_files": 1,
+      "tool_calls": 7,
+      "tools": {
+        "agent_status": 3,
+        "coas_schedule_list": 1,
+        "kanban_snapshot": 2,
+        "message_read": 1
+      },
+      "workspace_dir": "--home-jim-git-working-notes-executive-office-admin-assistant--"
+    },
+    "coas": {
+      "domain": "quartermaster",
+      "session_files": 11,
+      "tool_calls": 878,
+      "tools": {
+        "agent_peek": 24,
+        "agent_send": 16,
+        "agent_status": 9,
+        "bash": 484,
+        "edit": 107,
+        "get_name": 1,
+        "goal_get": 2,
+        "kanban_snapshot": 3,
+        "kill_agent": 3,
+        "list_spawned": 6,
+        "message_read": 25,
+        "message_send": 6,
+        "read": 177,
+        "rpc_send": 5,
+        "set_name": 4,
+        "spawn_agent": 3,
+        "write": 3
+      },
+      "workspace_dir": "--home-jim-git-coas--"
+    },
+    "executive-assistant": {
+      "domain": "admin",
+      "session_files": 0,
+      "tool_calls": 0,
+      "tools": {},
+      "workspace_dir": "--home-jim-git-working-notes-executive-office-executive-assistant--"
+    }
+  }
+}
