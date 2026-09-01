@@ -49,13 +49,13 @@ def main():
               f"qwen38-train container): {exc}")
         return 1
 
-    print(f"[smoke] loading {MODEL_PATH} (16-bit LoRA; the FP8 checkpoint is "
-          f"pre-quantized so 4-bit load is disabled)...", flush=True)
+    print(f"[smoke] loading {MODEL_PATH} (4-bit QLoRA on BF16 base; the FP8 "
+          f"quantizer path failed gate 1 — see ADR history)...", flush=True)
     try:
         model, tokenizer = FastLanguageModel.from_pretrained(
             model_name=MODEL_PATH,
             max_seq_length=SEQ_LEN,
-            load_in_4bit=False,
+            load_in_4bit=True,
             dtype=None,
         )
         model = FastLanguageModel.get_peft_model(
