@@ -85,7 +85,7 @@ Explicit API sampling values are left to the client. Qwen recommends these
 presets in the [official Qwen3.8-27B model card](https://huggingface.co/Qwen/Qwen3.8-27B#best-practices):
 
 | Mode | Thinking | Temperature | Top-p | Top-k | Min-p | Presence penalty | Repetition penalty |
-|---|---:|---:|---:|---:|---:|---:|---:|
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Thinking | enabled | `1.0` | `0.95` | `20` | `0.0` | `0.0` | `1.0` |
 | Instruct | disabled | `0.7` | `0.8` | `20` | `0.0` | `1.5` | `1.0` |
 
@@ -106,7 +106,7 @@ context, temperature 0, and top-p 1. The 16-bit baseline is the official BF16
 checkpoint; Qwen does not publish this checkpoint as FP16.
 
 | Checkpoint | Speculation | Short decode | Coding decode | Long prefill |
-|---|---:|---:|---:|---:|
+| --- | ---: | ---: | ---: | ---: |
 | Qwen BF16 | none | 4.41 tok/s | 4.40 tok/s | 1,206 tok/s |
 | Qwen FP8 | none | 7.87 tok/s | 7.84 tok/s | 906 tok/s |
 | Unsloth NVFP4 | none | 11.20 tok/s | 11.20 tok/s | 1,315 tok/s |
@@ -133,7 +133,7 @@ Pinned checkpoint revisions used for the comparison:
 greedy decoding (median of 3 runs, 2026-09-01, this machine):
 
 | Test | SGLang DSpark (NVFP4) | Ollama 0.33.2 (GGUF) |
-|---|---:|---:|
+| --- | ---: | ---: |
 | Short decode, 256 tokens | 22.25 tok/s | 21.61 tok/s |
 | Coding decode, 512 tokens | 30.87 tok/s | 31.09 tok/s |
 | Long prefill, 37,388 tokens | 24.6 s (1,518 tok/s) | 53.6 s (697 tok/s) |
@@ -147,7 +147,7 @@ recorded in [ADR-0001](docs/adrs/0001-sglang-resident-runtime.md).
 ## Configuration
 
 | Variable | Default | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | `QWEN38_MODELS_ROOT` | `$HOME/models/qwen3.8-27b` | checkpoint directories |
 | `QWEN38_SGLANG_IMAGE` | pinned digest | SGLang container image |
 | `QWEN38_CACHE` | `${XDG_CACHE_HOME:-$HOME/.cache}/qwen3.8-sglang` | compiler and kernel cache |
