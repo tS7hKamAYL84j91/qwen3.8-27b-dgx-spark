@@ -79,26 +79,26 @@ exec docker run --rm \
   -v "$cache_dir:/root/.cache" \
   "$container_image" \
   python3 -m sglang.launch_server \
-    --trust-remote-code \
-    --model-path /model \
-    --served-model-name qwen3.8 \
-    --context-length "$context" \
-    --kv-cache-dtype "$kv_cache_dtype" \
-    --mem-fraction-static "$mem_fraction" \
-    --max-running-requests "$max_requests" \
-    --chunked-prefill-size "$chunked_prefill_size" \
-    --tp-size 1 \
-    --mamba-full-memory-ratio 3 \
-    --mamba-ssm-dtype bfloat16 \
-    --mamba-radix-cache-strategy extra_buffer \
-    --speculative-algorithm DSPARK \
-    --speculative-draft-model-path /draft \
-    --speculative-dspark-block-size "$dspark_block_size" \
-    --speculative-draft-model-quantization unquant \
-    --attention-backend flashinfer \
-    --disable-prefill-cuda-graph \
-    --reasoning-parser qwen3 \
-    --tool-call-parser qwen3_coder \
-    --host 127.0.0.1 \
-    --port "$port" \
-    $extra_args
+  --trust-remote-code \
+  --model-path /model \
+  --served-model-name qwen3.8 \
+  --context-length "$context" \
+  --kv-cache-dtype "$kv_cache_dtype" \
+  --mem-fraction-static "$mem_fraction" \
+  --max-running-requests "$max_requests" \
+  --chunked-prefill-size "$chunked_prefill_size" \
+  --tp-size 1 \
+  --mamba-full-memory-ratio 3 \
+  --mamba-ssm-dtype bfloat16 \
+  --mamba-radix-cache-strategy extra_buffer \
+  --speculative-algorithm DSPARK \
+  --speculative-draft-model-path /draft \
+  --speculative-dspark-block-size "$dspark_block_size" \
+  --speculative-draft-model-quantization unquant \
+  --attention-backend flashinfer \
+  --disable-prefill-cuda-graph \
+  --reasoning-parser qwen3 \
+  --tool-call-parser qwen3_coder \
+  --host 127.0.0.1 \
+  --port "$port" \
+  $extra_args

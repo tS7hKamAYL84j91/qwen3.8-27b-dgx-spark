@@ -20,7 +20,7 @@ results_dir=/tmp/dspark_sweep
 mkdir -p "$results_dir"
 
 wait_healthy() {
-  local deadline=$(( $(date +%s) + 300 ))
+  local deadline=$(($(date +%s) + 300))
   while [ "$(date +%s)" -lt "$deadline" ]; do
     if curl -fsS --max-time 3 "http://127.0.0.1:${QWEN38_PORT:-18083}/v1/models" >/dev/null 2>&1; then
       return 0
