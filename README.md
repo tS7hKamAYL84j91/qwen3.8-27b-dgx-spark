@@ -144,6 +144,17 @@ requests against ollama's single slot, so it remains the promoted profile.
 The two runtimes cannot hold the GPU at the same time on this box, which is
 recorded in [ADR-0001](docs/adrs/0001-sglang-resident-runtime.md).
 
+The two runtimes cannot hold the GPU at the same time on this box, which is
+recorded in [ADR-0001](docs/adrs/0001-sglang-resident-runtime.md).
+
+### Tuning sweep
+
+A configuration sweep (2026-09-01, `benchmarks/sweep.sh`) found no single-stream
+improvement over the shipped defaults: DSpark block sizes 5, 9, 11 measured
+equal or slower than block 7, an `nvfp4_online` quantized drafter was slower,
+and 16,384-token prefill chunks halved long-prefill throughput versus 8,192.
+Details in [ADR-0002](docs/adrs/0002-dspark-tuning-sweep.md).
+
 ## Configuration
 
 | Variable | Default | Purpose |
@@ -159,6 +170,7 @@ recorded in [ADR-0001](docs/adrs/0001-sglang-resident-runtime.md).
 | `QWEN38_KV_CACHE_DTYPE` | `fp8_e4m3` | KV cache data type |
 | `QWEN38_DSPARK_BLOCK_SIZE` | `7` | DSpark proposal block size |
 | `QWEN38_AUTO_DOWNLOAD` | `1` | set to `0` to require preloaded weights |
+| `QWEN38_EXTRA_ARGS` | — | extra `sglang.launch_server` flags appended verbatim (for experiments) |
 
 The pinned image digest is the only one tested here. The launcher uses host
 networking and binds SGLang to `127.0.0.1`; put an authenticated proxy in front

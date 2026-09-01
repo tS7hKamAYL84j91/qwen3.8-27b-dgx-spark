@@ -28,15 +28,23 @@ echo "starting sglang (container $container_name, port $port); logs: $log_file"
 nohup bash "$script_dir/run-sglang.sh" >>"$log_file" 2>&1 &
 
 # Allow up to 30 minutes: first start may download checkpoints (~20 GB).
+# A transient `docker ps` failure must not be read as container death; only
+# declare exit after several consecutive misses.
+misses=0
 for _ in $(seq 1 180); do
   if healthy; then
     echo "sglang is serving on 127.0.0.1:${port}"
     exit 0
   fi
-  if ! docker ps --format '{{.Names}}' | grep -qx "$container_name"; then
-    echo "container $container_name exited before becoming healthy; last log lines:" >&2
-    tail -n 20 "$log_file" >&2 || true
-    exit 1
+  if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -qx "$container_name"; then
+    misses=$((misses + 1))
+    if [ "$misses" -ge 3 ]; then
+      echo "container $container_name exited before becoming healthy; last log lines:" >&2
+      tail -n 20 "$log_file" >&2 || true
+      exit 1
+    fi
+  else
+    misses=0
   fi
   sleep 10
 done

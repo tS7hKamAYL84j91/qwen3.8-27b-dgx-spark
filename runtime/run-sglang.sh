@@ -14,6 +14,9 @@ kv_cache_dtype=${QWEN38_KV_CACHE_DTYPE:-fp8_e4m3}
 dspark_block_size=${QWEN38_DSPARK_BLOCK_SIZE:-7}
 container_name=${QWEN38_CONTAINER_NAME:-qwen38-sglang}
 auto_download=${QWEN38_AUTO_DOWNLOAD:-1}
+# Intentional word splitting: QWEN38_EXTRA_ARGS carries multiple server flags.
+# shellcheck disable=SC2086
+extra_args=${QWEN38_EXTRA_ARGS:-}
 
 target_repo=RadixArk/Qwen3.8-27B-NVFP4
 target_revision=52d1adc5f38aa5ebf099c29ed7025ba34cfbb854
@@ -97,4 +100,5 @@ exec docker run --rm \
     --reasoning-parser qwen3 \
     --tool-call-parser qwen3_coder \
     --host 127.0.0.1 \
-    --port "$port"
+    --port "$port" \
+    $extra_args
