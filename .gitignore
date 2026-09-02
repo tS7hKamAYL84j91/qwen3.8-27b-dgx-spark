@@ -5,3 +5,7 @@ __pycache__/
 .pi
 training/unsloth_compiled_cache/
 training/outputs/
+training/dataset/
+training/eval/results/
+training/dataset/
+training/eval/results/
